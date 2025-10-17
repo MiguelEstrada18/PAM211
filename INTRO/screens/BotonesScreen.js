@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   botonApagar:{
-    backgroundColor:'orange',
+    backgroundColor:'red',
     paddingVertical: 10,
     paddingHorizontal: 25,
     borderRadius: 8,
