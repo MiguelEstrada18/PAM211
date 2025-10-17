@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   botonEncender:{
-    backgroundColor:'green',
+    backgroundColor:'blue',
     paddingVertical: 10,
     paddingHorizontal: 25,
     borderRadius: 8,
