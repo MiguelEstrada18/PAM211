@@ -12,6 +12,7 @@ import {
 // Imagen local que se usará como fondo del SplashScreen
 const backgroundImage = require('../assets/splash-icon.png');
 
+
 // Componente funcional principal
 export default function ImageBackGroundSplashScreen({ navigation }) {
   // Estado para controlar si mostrar SplashScreen o pantalla principal; NUEVO
@@ -46,9 +47,16 @@ export default function ImageBackGroundSplashScreen({ navigation }) {
 
   // Si ya pasó el tiempo, muestra esta otra pantalla dentro del mismo componente; NUEVO
   return (
+    <ImageBackground
+        source={backgroundImage} // Imagen de fondo
+        style={styles.background} // Aplica estilos para ocupar toda la pantalla
+        resizeMode="cover" // La imagen cubre toda el área, después ponemos los subtitulos
+      >
     <View style={styles.mainScreen}>
       <Text style={styles.mainText}>Bienvenido</Text>
     </View>
+    </ImageBackground>
+    
   );
 }
 
@@ -72,7 +80,7 @@ const styles = StyleSheet.create({
   },
   // Estilo para el texto principal (título)
   title: {
-    color: '#fff', // Texto blanco
+    color: 'white', // Texto blanco
     fontSize: 32, // Tamaño grande
     fontWeight: 'bold', // Negrita
     marginBottom: 10, // Espaciado inferior
@@ -83,11 +91,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white', 
   },
   // Texto para la pantalla principal; NUEVO TODO
   mainText: {
     fontSize: 24,
-    color: '#333',
+    color: 'black',
   },
 });
