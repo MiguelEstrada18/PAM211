@@ -6,8 +6,7 @@ export default function ScrollViewScreen() {
       <View style = {styles.container}>
         <ScrollView style={styles.scrollArea} 
         contentContainerStyle={styles.scrollContent} 
-        showsHorizontalScrollIndicator={true}
-        horizontal={true}>
+        showsVerticalScrollIndicator={true}>
           <Text style={styles.title}>Comics En Lista</Text>
           <Text style={styles.item}>MI lista</Text>
           <Text style={styles.textRed}>Comics Marvel</Text>

@@ -4,6 +4,7 @@ import BotonesScreen from './BotonesScreen';
 import ContadorScreen from './ContadorScreen';
 import TextInputAlertScreen from './TextInputAlertScreen';
 import ImageBackGroundSplashScreen from './ImageBackGroungSplashScreen';
+import RepasoScreen from './RepasoScreen';
 import ScrollViewScreen from './ScrollViewScreen';
 import ActivityIndicatorScreen from './ActivityIndicatorScreen';
 import FlatSectionListScreen from './FlatSectionListScreen';
@@ -22,6 +23,8 @@ export default function MenuScreen() {
         return <TextInputAlertScreen/>;
     case'ImageBackSplash':
         return <ImageBackGroundSplashScreen/>;
+    case'Repaso':
+        return <RepasoScreen/>;
     case'scrollview':
         return <ScrollViewScreen/>;
     case'activityindicator':
@@ -39,6 +42,7 @@ export default function MenuScreen() {
                 <Button color='grey' onPress={()=>setScreen('botones')} title='Pract: Botones'></Button>
                 <Button color='grey' onPress={()=>setScreen('input&alert')} title='Pract: Input & Alert'></Button>
                 <Button color='grey' onPress={()=>setScreen('ImageBackSplash')} title='Pract: ImageBackground Splash'></Button>
+                <Button color='grey' onPress={()=>setScreen('Repaso')} title='Pract: Repaso'></Button>
                 <Button color='grey' onPress={()=>setScreen('scrollview')} title='Pract: ScrollView'></Button>
                 <Button color='grey' onPress={()=>setScreen('activityindicator')} title='Pract: Activity Indicator'></Button>
                 <Button color='grey' onPress={()=>setScreen('flatsectionlist')} title='Pract: Flat List & Section List'></Button>
