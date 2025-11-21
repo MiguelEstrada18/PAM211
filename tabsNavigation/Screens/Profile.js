@@ -1,13 +1,16 @@
-import { Text, StyleSheet, View } from 'react-native'
+import { Text, StyleSheet, Pressable, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default function Profile() {
+export default function Profile({navigation}) {
     return (
       <View style={styles.container}>
         <View style={styles.iconRow}>
             <Ionicons name="person-outline" size={28} color="green" />
             <Text style={styles.title}> Perfil de usuario </Text>
         </View>
+        <Pressable style={styles.buttonDetalle} onPress={() => navigation.navigate('Detalle')}>
+            <Text> Detalles de Usuario </Text>
+        </Pressable>
       </View>
     );
 }
@@ -30,4 +33,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         color: 'green',
     },
+    buttonDetalle: {
+        backgroundColor: 'blue',
+    }
 });

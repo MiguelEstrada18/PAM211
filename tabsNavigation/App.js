@@ -1,12 +1,25 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons} from '@expo/vector-icons';
+import 'react-native-gesture-handler';
 
 import Home from './Screens/Home';
 import Profile from './Screens/Profile';
 import Settings from './Screens/Settings';
+import Detalle from './Screens/Detalle';
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+function ProfileNuevo(){
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Detalle" component={Detalle} options={{ title: 'Detalles de Usuario'}}/>
+      <Stack.Screen name="Profile" component={Profile} options={{ title: 'Perfil de Usuario' }} />
+    </Stack.Navigator>
+  );
+}
 
 export default function App() {
   return (
@@ -36,7 +49,7 @@ export default function App() {
       })}
     >
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="Profile" component={ProfileNuevo} />
       <Tab.Screen name="Settings" component={Settings} />
 
     </Tab.Navigator>
