@@ -11,6 +11,8 @@ export default function UsuarioView() {
   const [loading, setLoading] = useState(true);
   const [guardando, setGuardando] = useState(false);
 
+  const [usuarioEditando, setUsuarioEditando] = useState(null);
+
   const cargarUsuarios = useCallback(async () => {
     try {
       setLoading(true);
@@ -52,6 +54,56 @@ export default function UsuarioView() {
       setGuardando(false);
     }
   };
+
+  const handleActualizar = async () => {
+    if (!usuarioEditando) return;
+
+    try {
+      setGuardando(true);
+      await controller.actualizarUsuario(usuarioEditando.id, nombre);
+      Alert.alert("Actualizado", `${nombre} fue actualizado correctamente`);
+      setUsuarioEditando(null);
+      setNombre("");
+      cargarUsuarios();
+    } catch (error) {
+      Alert.alert("Error", error.message);
+    } finally {
+      setGuardando(false);
+    }
+  };
+
+  const handleEliminar = async (id) => {
+    Alert.alert(
+      "Confirmar eliminación",
+      "¿Deseas eliminar este usuario?",
+      [
+        { text: "Cancelar", style: "cancel" },
+        { 
+          text: "Eliminar", 
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await controller.eliminarUsuario(id);
+              cargarUsuarios();
+            } catch (error) {
+              Alert.alert("Error", error.message);
+            }
+          }
+        }
+      ]
+    );
+  };
+
+  const iniciarEdicion = (usuario) => {
+    setUsuarioEditando(usuario);
+    setNombre(usuario.nombre);
+  };
+
+  const cancelarEdicion = () => { 
+    setUsuarioEditando(null);
+    setNombre("");
+  };
+
   const renderUsuario = ({ item, index }) => (
     <View style={styles.userItem}>
       <View style={styles.userNumber}>
@@ -68,6 +120,21 @@ export default function UsuarioView() {
           })}
         </Text>
       </View>
+      <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity
+          style={styles.editButton}
+          onPress={() => iniciarEdicion(item)}
+        >
+          <Text style={styles.editText}>Editar</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.deleteButton}
+          onPress={() => handleEliminar(item.id)}
+        >
+          <Text style={styles.deleteText}> Eliminar </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
@@ -77,7 +144,7 @@ export default function UsuarioView() {
 
       {/* Zona del encabezado */}
 
-      <Text style={styles.title}> INSERT & SELECT</Text>
+      <Text style={styles.title}> INSERT, SELECT, ACTUALIZAR & DELETE</Text>
       <Text style={styles.subtitle}>
         {Platform.OS === 'web' ? ' WEB (LocalStorage)' : ` ${Platform.OS.toUpperCase()} (SQLite)`}
       </Text>
@@ -85,7 +152,7 @@ export default function UsuarioView() {
       {/* Zona del INSERT */}
 
       <View style={styles.insertSection}>
-        <Text style={styles.sectionTitle}> Insertar Usuario</Text>
+        <Text style={styles.sectionTitle}> {usuarioEditando ? "Editar Usuario" : "Insertar Usuario"}</Text>
         
         <TextInput
           style={styles.input}
@@ -97,7 +164,7 @@ export default function UsuarioView() {
 
         <TouchableOpacity 
           style={[styles.button, guardando && styles.buttonDisabled]} 
-          onPress={handleAgregar}
+          onPress={usuarioEditando ? handleActualizar : handleAgregar}
           disabled={guardando} >
 
           <Text style={styles.buttonText}>
@@ -105,6 +172,12 @@ export default function UsuarioView() {
           </Text>
 
         </TouchableOpacity>
+
+        {usuarioEditando && (
+          <TouchableOpacity style={styles.cancelarButton} onPress={cancelarEdicion}>
+            <Text style={styles.cancelarTexto}>Cancelar edición</Text>
+          </TouchableOpacity>
+        )}
 
       </View>
 
@@ -332,5 +405,33 @@ const styles = StyleSheet.create({
   bold: {
     fontWeight: 'bold',
     color: '#1976D2',
+  },
+  cancelarButton: {
+    marginTop: 10,
+    padding: 10,
+    alignItems: "center",
+  },
+  cancelarTexto: {
+    color: "#FF3B30",
+    fontSize: 14,
+  },
+  editButton: {
+    backgroundColor: "#e3f2fd",
+    padding: 8,
+    borderRadius: 6,
+    marginRight: 8,
+  },
+  editText: {
+    color: "#000",
+    fontWeight: "600",
+  },
+  deleteButton: {
+    backgroundColor: "#e3f2fd",
+    padding: 8,
+    borderRadius: 6,
+  },
+  deleteText: {
+    color: "black",
+    fontWeight: "700",
   },
 });
